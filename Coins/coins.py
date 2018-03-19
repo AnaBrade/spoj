@@ -1,25 +1,16 @@
 import sys
 
 coins = sys.stdin.readlines()
-cache = {}
+cache = {0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7, 8:8, 9:9, 10:10, 11:11}
 
 def exchange_coin(coin):
 
     if coin not in cache:
-        if coin > 11:
-            value1 = exchange_coin(coin//2)
-            value2 = exchange_coin(coin//3)
-            value3 = exchange_coin(coin//4)
-
-            if (value1+value2+value3) > coin:
-                cache[coin] = value1 + value2 + value3
-                return value1 + value2 + value3
-            else:
-                cache[coin] = coin
-                return coin
-        else:
-            cache[coin] = coin
-            return coin
+        value = exchange_coin(coin//2) + exchange_coin(coin//3) + exchange_coin(coin//4)
+        if value < coin:
+            value = coin
+        cache[coin] = value
+        return value
     else:
         return cache[coin]
 
